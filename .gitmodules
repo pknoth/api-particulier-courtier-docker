@@ -1,0 +1,9 @@
+[submodule "back"]
+	path = back
+	url = git@github.com:sgmap/api-particulier-courtier-back.git
+[submodule "front"]
+	path = front
+	url = git@github.com:sgmap/api-particulier-courtier-front.git
+[submodule "oauth"]
+	path = oauth
+	url = git@github.com:sgmap/api-particulier-courtier-oauth.git

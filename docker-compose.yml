@@ -1,0 +1,39 @@
+version: '2.0'
+services:
+  postgres:
+    image: "postgres"
+  oauth:
+    container_name: oauth
+    build: ./oauth
+    command: rails s -e docker -b 0.0.0.0 -p 3001
+    volumes:
+      - ./oauth:/app
+    environment:
+      - SECRET_KEY_BASE=526ff2b59cb2f5d7a9452f8e127980cbb2e37c2deccfc4611adcc0497859f6bc4ba03b58ab385c400f2bc7f598ae27f151238185046ff59f89510bdcb09d8d78
+      - EDITOR=vi
+    depends_on:
+      - postgres
+    ports:
+      - "3001:3001"
+  back:
+    container_name: back
+    build: ./back
+    command: rails s -e docker
+    volumes:
+      - ./back:/app
+    environment:
+      - SECRET_KEY_BASE=526ff2b59cb2f5d7a9452f8e127980cbb2e37c2deccfc4611adcc0497859f6bc4ba03b58ab385c400f2bc7f598ae27f151238185046ff59f89510bdcb09d8d78
+      - RAILS_ENV=docker
+    depends_on:
+      - postgres
+    ports:
+      - "3000:3000"
+  front:
+    container_name: front
+    build: ./front
+    command: ng serve --host 0.0.0.0
+    ports:
+      - "4200:4200"
+    volumes:
+      - ./front:/app
+
